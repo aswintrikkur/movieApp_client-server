@@ -1,0 +1,19 @@
+.search-container {
+	width: 800px; /* doubt-- responsiveness */
+	/* width: 100%; */
+	font-size: 18px;
+	display: flex;
+	flex-direction: column;
+    overflow: hidden;
+}
+.search-container .title {
+	padding-left: 10px;
+	/* background-color: #ffffff3b; */
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 30px;
+}
+.search-container .title p {
+	font-size: 30px;
+}
