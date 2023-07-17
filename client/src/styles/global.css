@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-family: roboto;
 }
 body{
 background-color: rgb(44, 40, 82);
@@ -18,5 +18,4 @@ color: rgb(255, 255, 255);
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    padding-top: 100px;
 }

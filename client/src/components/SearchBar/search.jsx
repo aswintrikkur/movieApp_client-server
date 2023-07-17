@@ -3,6 +3,7 @@ import "./Search.css";
 import { SearchInput } from "./searchInput/SearchInput";
 import { SearchList } from "./searchList/SearchList";
 import axios from "axios";
+import { PopUpMessage } from "./popUpMessage/PopUpMessage";
 
 // method 1: local filteration
 // method 2: Filter through API
@@ -13,21 +14,51 @@ export const Search = () => {
 	//              --------state------------
 	const [searchInputValue, setSearchInputvalue] = useState("");
 	const [searchListValue, setSearchListValue] = useState([]);
-	const [initialList, setInitialList] = useState([]);
+	const [noMovie, setNoMovie] = useState(false);
+	const [apiMessage, setApiMessage] = useState({
+		fetchSearchList: "",
+		addMovieToDB: "",
+	});
+	const [showPopUp, setShowPopUp] = useState(true);
 
-	//              ---------API Call--------
+	//              --------- fetch data from DB--------
 	const fetchSearchList = async () => {
 		try {
-			const response = await axios(
-				API_URL /*,  {
-                params:{
-                    query : searchInputValue
-                }
-            }*/
-			);
-			// setSearchListValue(response.data);
-			console.log(response.data);
-			setInitialList(response.data);
+			const response = await axios(API_URL, {
+				params: {
+					movieName: searchInputValue,
+				},
+			});
+			setSearchListValue(response.data.results);
+			console.log(response.data.results);
+			console.log(response.data.message);
+			{
+				response.data.results.length === 0 ? setNoMovie(true) : setNoMovie(false);
+			}
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	//              --------- add movie to DB--------
+	const addMovieToDB = async () => {
+		try {
+			const response = axios(API_URL, {
+				method: "POST",
+				data: {
+					movieName: searchInputValue,
+				},
+			});
+			setNoMovie(false);
+			const { message } = await (await response).data;
+			setApiMessage((prev) => ({ ...prev, addMovieToDB: message }));
+			fetchSearchList();
+
+			//popUp message
+			setShowPopUp(true);
+			setTimeout(() => {
+				setShowPopUp(false);
+			}, 2000);
 		} catch (error) {
 			console.error(error);
 		}
@@ -43,15 +74,18 @@ export const Search = () => {
 			console.log("unMount");
 			clearTimeout(APIcall);
 		};
-	}, []);
+	}, [searchInputValue]);
 
 	//input-box handling
+	//popUp message
 	const handleChange = (event) => {
 		setSearchInputvalue(event.target.value);
-		const newFilteredList = initialList.filter((data) => {
+
+		/* // for local filtering
+		const newFilteredList = searchListValue.filter((data) => {
 			return data.title.toLowerCase().includes(event.target.value.toLowerCase());
 		});
-		setSearchListValue(newFilteredList);
+		setSearchListValue(newFilteredList);	*/
 	};
 
 	//clear button handling
@@ -61,18 +95,30 @@ export const Search = () => {
 
 	return (
 		<div>
+			{apiMessage.addMovieToDB && (
+				<PopUpMessage showPopUp={showPopUp}>
+					<p>{apiMessage.addMovieToDB}</p>
+				</PopUpMessage>
+			)}
 			<div className="search-container">
 				<div className="title">
 					<i className="fa-solid fa-magnifying-glass fa-xl"></i>
 					<p>Looking for movies? </p>
 				</div>
-
 				<SearchInput
 					searchInputValue={searchInputValue}
 					handleChange={handleChange}
 					handleClearButton={handleClearButton}
 				/>
-				<SearchList searchListValue={searchListValue} />
+				{noMovie && (
+					<div className="no-movie">
+						<p> movie not found ? </p>
+						<button className="add-movie" onClick={addMovieToDB}>
+							ADD MOVIE
+						</button>
+					</div>
+				)}
+				<SearchList showPopUp={showPopUp} searchListValue={searchListValue} />
 			</div>
 		</div>
 	);

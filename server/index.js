@@ -5,7 +5,7 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const movieList = require('./DataBase/movieData.json')
+const movieList = require('./DataBase/movieData.json');
 
 console.log(movieList.length);
 //creating server
@@ -28,14 +28,40 @@ const fetchDBmovieApi = async () => {
 }
 // fetchDBmovieApi();       //to fetch movie from DBmovies and store in movieData.json
 
+//          ------Routes-------
 app.get('/', (req, res) => {
     res.json('Hello World');
+});
+app.get('/movieList', ((req, res) => {
+    res.json(movieList);
+}));
+
+
+//          ----------API----------
+app.get('/api/movie', (req, res) => {
+    const { movieName } = req.query;
+    const filteredList = movieList.filter((data) => {
+        return data.title.toLocaleLowerCase().includes(movieName.toLocaleLowerCase());
+    });
+    res.json({
+        message: 'api fetched successfully',
+        results: filteredList,
+    });
+    // console.log('data responded');
 })
 
-app.get('/api/movie', (req, res) => {
-    res.json(movieList);
-    console.log('data responded');
-})
+app.post('/api/movie', (req, res) => {
+    const { movieName } = req.body;
+    const today = new Date();
+    movieList.push({
+        id: Date.now(),
+        release_date: today.getFullYear().toString(),
+        title: movieName,
+    })
+    res.json({
+        message: 'movie added to DB'
+    });
+});
 
 
 

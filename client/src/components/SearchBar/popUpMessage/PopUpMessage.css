@@ -1,0 +1,22 @@
+.popUp-message {
+	position: absolute;
+	left: 0;
+	top: 30px;
+	margin-left: 50%;
+	translate: -50%;
+
+	width: fit-content;
+	padding: 10px 20px;
+	border-radius: 10px;
+	background-color: rgba(71, 69, 69, 0.881);
+	/* background-color: black; */
+	color: rgb(65, 201, 38);
+	/* color: chartreuse; */
+	border: 1px solid rgba(31, 26, 26, 0.747);
+	font-size: 16px;
+	text-align: center;
+
+}
+.popUp-message p {
+	font-family: monospace;
+}
