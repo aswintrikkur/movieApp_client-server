@@ -13,17 +13,21 @@ export const Search = () => {
 	//              --------state------------
 	const [searchInputValue, setSearchInputvalue] = useState("");
 	const [searchListValue, setSearchListValue] = useState([]);
+	const [initialList, setInitialList] = useState([]);
 
 	//              ---------API Call--------
 	const fetchSearchList = async () => {
 		try {
-			const response = await axios(API_URL, {
+			const response = await axios(
+				API_URL /*,  {
                 params:{
                     query : searchInputValue
                 }
-            });
-            setSearchListValue(response.data);
+            }*/
+			);
+			// setSearchListValue(response.data);
 			console.log(response.data);
+			setInitialList(response.data);
 		} catch (error) {
 			console.error(error);
 		}
@@ -39,12 +43,12 @@ export const Search = () => {
 			console.log("unMount");
 			clearTimeout(APIcall);
 		};
-	}, [searchInputValue]);
+	}, []);
 
 	//input-box handling
 	const handleChange = (event) => {
 		setSearchInputvalue(event.target.value);
-		const newFilteredList = searchListValue.filter((data) => {
+		const newFilteredList = initialList.filter((data) => {
 			return data.title.toLowerCase().includes(event.target.value.toLowerCase());
 		});
 		setSearchListValue(newFilteredList);
@@ -63,11 +67,12 @@ export const Search = () => {
 					<p>Looking for movies? </p>
 				</div>
 
-				<SearchInput searchInputValue={searchInputValue}
-                    handleChange={handleChange}
-                    handleClearButton={handleClearButton}
-                />
-                <SearchList searchListValue={searchListValue} />
+				<SearchInput
+					searchInputValue={searchInputValue}
+					handleChange={handleChange}
+					handleClearButton={handleClearButton}
+				/>
+				<SearchList searchListValue={searchListValue} />
 			</div>
 		</div>
 	);
