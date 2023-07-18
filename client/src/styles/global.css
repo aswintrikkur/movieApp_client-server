@@ -4,7 +4,7 @@
     box-sizing: border-box;
 	font-family: roboto;
 }
-body{
+/* body{
 background-color: rgb(44, 40, 82);
 background-repeat: no-repeat;
 min-height: 100vh;
@@ -12,10 +12,10 @@ display: flex;
 justify-content: center;
 align-items: center;
 color: rgb(255, 255, 255);
-}
-#root{
+} */
+/* #root{
     width: 100%;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-}
+} */

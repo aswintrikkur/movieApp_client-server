@@ -8,7 +8,7 @@ export const SearchList = ({ searchListValue }) => {
 
 	// selected content handling
 	const handleSeclectedContent = (key) => {
-		console.log(key);
+		// console.log(key);
 		setSelected((prev) => !prev);
 		const newContent = searchListValue.find((data) => {
 			return data.id === key;
@@ -23,7 +23,7 @@ export const SearchList = ({ searchListValue }) => {
 		<div>
 			<div className="search-list-container">
 				{selected && (
-					<div className="selected-content-div">
+					<div className="selected-content-div ">
 						<div className="selected-content">
 							<button onClick={() => setSelected(false)}> X</button>
 							<img
