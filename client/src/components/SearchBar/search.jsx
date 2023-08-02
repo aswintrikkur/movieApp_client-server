@@ -4,13 +4,13 @@ import { SearchInput } from "./searchInput/SearchInput";
 import { SearchList } from "./searchList/SearchList";
 import axios from "axios";
 import { PopUpMessage } from "./popUpMessage/PopUpMessage";
+import { API_URL } from "../../api/api";
 
 // method 1: local filteration
 // method 2: Filter through API
 
-const API_URL = "http://localhost:3500/api/movie";
 
-export const Search = () => {
+export const Search = ({fetchBgImage}) => {
 	//              --------state------------
 	const [searchInputValue, setSearchInputvalue] = useState("");
 	const [searchListValue, setSearchListValue] = useState([]);
@@ -118,7 +118,7 @@ export const Search = () => {
 						</button>
 					</div>
 				)}
-				<SearchList showPopUp={showPopUp} searchListValue={searchListValue} />
+				<SearchList showPopUp={showPopUp} searchListValue={searchListValue} fetchBgImage={fetchBgImage} />
 			</div>
 		</div>
 	);

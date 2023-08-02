@@ -1,9 +1,8 @@
 .app-container{
-  /* background-color: rgba(0, 0, 0, 0.452); */
-  background-image: url('https://wallpaperaccess.com/full/442431.jpg');
+  /* background-image: url('https://wallpaperaccess.com/full/442431.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center; */
   width: 100vw;
   min-height: 100vh;
   padding-top: 100px;
@@ -12,4 +11,17 @@
   align-items: center;
 
   color: white;
+}
+.app-container .blur{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  filter: blur(1px);
+
+  background-image: url('https://wallpaperaccess.com/full/442431.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+z-index: -1;
 }
